@@ -23,5 +23,8 @@ bash scripts/check.sh all
 ## Preview
 <preview URL / staging URL, or local run + screenshots — as defined in docs/stack.md>
 
+## Commit trailer
+Every commit ends with the `Built-with:` line from `AGENTS.md` → Attribution.
+
 ## Deviations from design / architecture
 <none, or list with reasons>

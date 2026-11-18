@@ -4,6 +4,7 @@ A reusable Claude Code setup for building custom-code websites for any brand, in
 
 > **Using this template:** click **Use this template → Create a new repository** and choose **Private** for client projects — each site holds the client's business details, goals and unreleased work. **Don't fork:** a fork of a public repo stays public.
 
+- **Template origin & version:** `TEMPLATE.md` (keep it in every project)
 - **Agent rules:** `AGENTS.md` (Claude Code reads it automatically)
 - **Agents:** `.claude/agents/` — planner, ux-designer, architect, coder, reviewer, builder
 - **Brand & goals (per site):** `docs/project-context.md` — blank in the template, filled by the intake interview

@@ -37,6 +37,7 @@ Do not rely on the coder's explanation of why something is fine.
 - [ ] No secrets in the repo or the client bundle
 - [ ] Tests cover the acceptance criteria that can be automated
 - [ ] Metadata, sitemap and redirects updated if pages or URLs changed
+- [ ] Foundation / launch: generator meta tag in the base layout and `humans.txt` in the web root (see Attribution in `AGENTS.md`); `TEMPLATE.md` present
 
 ## Rules
 - You may run commands, but **do not edit code**. Only write `work/<slug>/5-review.md`.

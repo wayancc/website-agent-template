@@ -29,3 +29,5 @@ Mode: build | maintain  ·  Size: trivial | standard | large
 
 ---
 Merging this PR = go-live approval. Only the user merges.
+
+🤖 Built with [Website Agent Template](https://github.com/wayancc/website-agent-template)

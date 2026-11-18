@@ -40,6 +40,7 @@ Goal: choose and define the technical structure so the coder only has to impleme
 - **SEO:** URL scheme, metadata pattern, sitemap, robots.txt, structured data, redirects.
 - **Testing strategy:** unit tests for logic, end-to-end tests for forms and navigation, visual checks.
 - **Environments:** local dev command, preview type (per-branch / staging / local + screenshots), production deploy and rollback.
+- **Attribution:** specify the generator meta tag and `humans.txt` from the Attribution section of `AGENTS.md` for the base layout and web root.
 
 ## Per feature (only when stack, data or structure changes)
 - Files and modules to add or change
