@@ -1,6 +1,6 @@
 # Review Standards
 
-The reviewer applies these checks plus the custom-code checks in `.claude/agents/reviewer.md`.
+The reviewer applies these checks, the custom-code checks in `.claude/agents/reviewer.md`, and the Reviewer checks in the stack's rule pack (`docs/stack-rules/`).
 
 ## Severity
 
@@ -26,7 +26,8 @@ Every "pass" needs evidence: command output, a screenshot, a URL checked, or a f
 - [ ] No console errors
 - [ ] Copy matches the tone of voice in `docs/project-context.md`; no typos
 - [ ] Links in the changed area work
-- [ ] CI is green on the PR
+- [ ] CI is green on the PR (`bash scripts/check.sh all`)
+- [ ] Previewed the way `docs/stack.md` defines (per-branch preview, staging, or local + screenshots)
 
 ## Checklist B — standard and larger changes
 
@@ -60,6 +61,10 @@ Every "pass" needs evidence: command output, a screenshot, a URL checked, or a f
 
 ### Security / privacy
 - [ ] No secrets or API keys in front-end code or the repo
+- [ ] Server-side input validated; output escaped; database queries parameterized
+- [ ] CSRF protection on every server-handled form
+- [ ] Only the public web root is reachable; config, `.env` and dependencies are not
+- [ ] Dependency audit (the stack's audit tool) shows no unresolved high/critical issues
 - [ ] Third-party scripts are necessary and from trusted sources
 - [ ] Cookie/consent behavior matches what the user requires
 

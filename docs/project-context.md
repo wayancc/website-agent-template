@@ -48,7 +48,15 @@ Main conversion action (what counts as success): [TBD]
 | Local | http://localhost:[TBD] | |
 
 Repo: [TBD — github.com/<account>/<brand>-site]
-Hosting: [TBD — decided by architect + user during Foundation]
+Hosting: [TBD — decided by architect + user during Foundation, recorded in docs/stack.md]
+
+## Technical constraints
+
+- Required language / framework: [TBD — or "architect recommends"]
+- Existing hosting / server: [TBD — e.g. cPanel shared hosting with PHP 8.x, none]
+- Who maintains the code after launch (skills): [TBD]
+- Budget for hosting / paid services (per month): [TBD]
+- Must integrate with: [TBD — existing database, CRM, booking system…]
 
 ## Do not touch without user approval
 

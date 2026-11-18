@@ -18,6 +18,16 @@ out/
 .env.*
 !.env.example
 
+# Common language caches (stack-specific entries come from docs/stack-rules/)
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.gradle/
+.phpunit.result.cache
+
 # Tests / reports
 coverage/
 playwright-report/

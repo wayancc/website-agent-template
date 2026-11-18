@@ -15,7 +15,8 @@ Verdict: APPROVED | REJECTED | ESCALATE TO USER
 
 ## Checks run
 ```
-<commands and their output>
+bash scripts/check.sh install && bash scripts/check.sh all
+<output>
 ```
 
 ## Notes for the user

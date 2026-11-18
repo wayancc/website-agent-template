@@ -4,7 +4,7 @@ Used by the planner in **intake mode**, at the start of a new project, to fill i
 
 ## How to run intake
 
-1. Ask in **3 rounds**, max 6 questions per round. Wait for answers between rounds.
+1. Ask in **3 rounds**, max 7 questions per round. Wait for answers between rounds.
 2. Accept short answers. If the user says "skip" or "don't know", write `[TBD — skipped]` and move on.
 3. If the user shares a link (old site, Instagram, brand guide, reference sites), read it and **propose** answers instead of asking — the user just confirms or corrects.
 4. After round 3, write `docs/project-context.md`, set `Status: intake done`, and show the user a short summary.
@@ -39,4 +39,5 @@ Required before Foundation (cannot be skipped): brand / site name, what it sells
 3. Forms: what should each form collect, and where should submissions go?
 4. Is this replacing an old site? (old URLs that need redirects)
 5. Who approves go-live (merges PRs)? Who owns the content?
-6. Any deadline, budget limits for paid services, or hosting preference?
+6. Any deadline or budget limit for hosting and paid services?
+7. Technical constraints: a required language or framework (e.g. PHP, Python, WordPress), existing hosting, or a team that will maintain it — or should the architect recommend?

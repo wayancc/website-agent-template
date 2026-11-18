@@ -2,7 +2,7 @@
 
 mode: build        # build | maintain — switch to maintain after launch
 
-This repo is a website built in custom code, created from a reusable agent template. The brand, goals and pages for *this* site live in `docs/project-context.md`. Claude Code reads this file automatically (AGENTS.md is read when the repo has no CLAUDE.md — do not add a CLAUDE.md unless its first line is `@AGENTS.md`).
+This repo is a website built in custom code — **any language or framework** — created from a reusable agent template. The brand, goals and pages for *this* site live in `docs/project-context.md`. Claude Code reads this file automatically (AGENTS.md is read when the repo has no CLAUDE.md — do not add a CLAUDE.md unless its first line is `@AGENTS.md`).
 
 ## Start of every session
 
@@ -16,6 +16,21 @@ Every agent reads these first:
 
 1. `docs/project-context.md` — brand, audience, goals, constraints
 2. `docs/review-standards.md` — the quality bar every change must meet
+3. `docs/stack.md` and the rule pack(s) it names in `docs/stack-rules/` — once the stack is approved
+
+---
+
+## Stack contract (any language)
+
+The workflow is the same for every language. Everything stack-specific lives in three places, owned by the architect:
+
+| File | Holds |
+|---|---|
+| `docs/stack.md` | Chosen language, framework, hosting, commands, previews, web root |
+| `docs/stack-rules/<pack>.md` | Coding, security and review rules for that language family |
+| `scripts/check.sh` | The actual commands behind `install`, `lint`, `types`, `test`, `build` |
+
+Agents and CI only ever run `bash scripts/check.sh <command>` — never `npm`, `composer`, `pip`, `cargo`… directly. Rule packs exist for static sites, JavaScript/TypeScript, PHP, WordPress, Python, Ruby, Go, JVM, .NET and Rust; for anything else the architect writes a new pack from `docs/stack-rules/_template.md`.
 
 ---
 
@@ -71,7 +86,7 @@ deploy (automatic on merge to main, once hosting is set up)
 
 ### Build order for the whole site
 
-1. **Foundation** — architect proposes the stack (user decides), then sets up the repo, tooling, CI and preview deploys. ux-designer delivers design tokens and the shared component inventory. coder builds the base layout (header, footer, nav) and shared components.
+1. **Foundation** — architect proposes the stack with alternatives (user decides), then sets up the stack contract (`docs/stack.md`, rule pack, `scripts/check.sh`, version file, CI additions) and preview/deploy approach. ux-designer delivers design tokens and the shared component inventory. coder builds the base layout (header, footer, nav) and shared components.
 2. **Pilot page** — the homepage goes through the full workflow. It sets the pattern for everything after it.
 3. **Remaining pages** — in parallel, one `work/<page>/` folder and one branch each, reusing shared components. A new shared component goes back to ux-designer first.
 4. **Launch check** — reviewer runs checklist B across the whole site, plus redirects, sitemap, robots.txt, analytics, 404 page.
@@ -133,6 +148,7 @@ Written by planner (or builder), in the form `AC-1: <observable result> — veri
 - Deleting pages or content
 - Changing an existing URL (redirect required)
 - Adding a paid service or a dependency with a cost
+- Changing the language, framework, database or hosting after the stack is approved
 - Anything touching payments, customer data, cookies/consent or legal pages
 
 ### Never
@@ -140,6 +156,7 @@ Written by planner (or builder), in the form `AC-1: <observable result> — veri
 - Push directly to `main`
 - Guess a `[TBD]` value from `docs/project-context.md` — run intake or ask the user
 - Put brand-specific content in the agent files — it belongs in `docs/project-context.md` so the template stays reusable
+- Put stack-specific commands in the agent files — they belong in `scripts/check.sh` and `docs/stack.md`
 - Skip the reviewer
 
 ### Definition of done

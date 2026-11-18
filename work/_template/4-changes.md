@@ -16,15 +16,12 @@ Role: coder | builder | Date: YYYY-MM-DD | Branch: feat/<slug> | PR: <link>
 
 ## Checks run
 ```
-npm run lint
-npm run typecheck
-npm test
-npm run build
+bash scripts/check.sh all
 <paste output>
 ```
 
 ## Preview
-<preview URL, or how to run locally>
+<preview URL / staging URL, or local run + screenshots — as defined in docs/stack.md>
 
 ## Deviations from design / architecture
 <none, or list with reasons>

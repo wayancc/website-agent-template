@@ -1,5 +1,9 @@
 name: CI
 
+# Stack-neutral: detects the language(s) from files in the repo, sets up the
+# toolchain, then runs scripts/check.sh. The architect adds anything extra
+# (database service, Hugo, Playwright browsers…) and records it in docs/stack.md.
+
 on:
   pull_request:
   push:
@@ -11,43 +15,91 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      # Skips cleanly until the architect sets up the project (no package.json yet).
-      - name: Detect project
+      - name: Detect stack
         id: detect
         run: |
-          if [ -f package.json ]; then
-            echo "ready=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "ready=false" >> "$GITHUB_OUTPUT"
-            echo "No package.json yet — skipping checks."
-          fi
+          has() { for f in "$@"; do [ -e "$f" ] && return 0; done; return 1; }
+          out() { echo "$1=$2" >> "$GITHUB_OUTPUT"; }
+          ver() { if [ -f "$1" ]; then tr -d ' \n\r' < "$1"; else echo "$2"; fi; }
+
+          has package.json                                && out node true
+          has composer.json                               && out php true
+          has pyproject.toml requirements.txt Pipfile     && out python true
+          has Gemfile                                     && out ruby true
+          has go.mod                                      && out go true
+          has pom.xml build.gradle build.gradle.kts       && out java true
+          has Cargo.toml                                  && out rust true
+          has global.json                                 && out dotnet_global true
+          if [ -n "$(find . -maxdepth 3 \( -name '*.sln' -o -name '*.csproj' -o -name '*.fsproj' \) -not -path './.git/*' | head -1)" ]; then out dotnet true; fi
+
+          # Versions: read from version files, with current defaults.
+          out node_version   "$(ver .nvmrc 24)"
+          out php_version    "$(ver .php-version 8.4)"
+          out python_version "$(ver .python-version 3.13)"
+          out ruby_version   "$(ver .ruby-version 3.4)"
+          out java_version   "$(ver .java-version 21)"
 
       - name: Set up Node
-        if: steps.detect.outputs.ready == 'true'
+        if: steps.detect.outputs.node == 'true'
         uses: actions/setup-node@v5
         with:
-          node-version: '24'   # architect may change this; keep in sync with .nvmrc
+          node-version: ${{ steps.detect.outputs.node_version }}
+
+      - name: Set up PHP
+        if: steps.detect.outputs.php == 'true'
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ steps.detect.outputs.php_version }}
+          tools: composer
+
+      - name: Set up Python
+        if: steps.detect.outputs.python == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ steps.detect.outputs.python_version }}
+
+      - name: Set up Ruby
+        if: steps.detect.outputs.ruby == 'true'
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ steps.detect.outputs.ruby_version }}
+
+      - name: Set up Go
+        if: steps.detect.outputs.go == 'true'
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Set up Java
+        if: steps.detect.outputs.java == 'true'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ steps.detect.outputs.java_version }}
+
+      - name: Set up .NET (global.json)
+        if: steps.detect.outputs.dotnet == 'true' && steps.detect.outputs.dotnet_global == 'true'
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Set up .NET (latest LTS)
+        if: steps.detect.outputs.dotnet == 'true' && steps.detect.outputs.dotnet_global != 'true'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Set up Rust components
+        if: steps.detect.outputs.rust == 'true'
+        run: rustup component add rustfmt clippy
+
+      # ── Architect: add stack-specific steps here (DB service, Hugo, browsers…) ──
 
       - name: Install
-        if: steps.detect.outputs.ready == 'true'
-        run: |
-          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+        run: bash scripts/check.sh install
 
-      - name: Lint
-        if: steps.detect.outputs.ready == 'true'
-        run: npm run lint --if-present
-
-      - name: Type-check
-        if: steps.detect.outputs.ready == 'true'
-        run: npm run typecheck --if-present
-
-      - name: Test
-        if: steps.detect.outputs.ready == 'true'
-        run: npm test --if-present
-
-      - name: Build
-        if: steps.detect.outputs.ready == 'true'
-        run: npm run build --if-present
+      - name: Checks (lint, types, test, build)
+        run: bash scripts/check.sh all
 
       - name: Block committed env files
         run: |

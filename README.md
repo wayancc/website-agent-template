@@ -1,6 +1,6 @@
 # Website Agent Template
 
-A reusable Claude Code setup for building custom-code websites for any brand. Six agents plan, design, build and review each site; you approve by merging pull requests.
+A reusable Claude Code setup for building custom-code websites for any brand, in almost any language. Six agents plan, design, build and review each site; you approve by merging pull requests.
 
 > **Using this template:** click **Use this template → Create a new repository** and choose **Private** for client projects — each site holds the client's business details, goals and unreleased work. **Don't fork:** a fork of a public repo stays public.
 
@@ -8,9 +8,32 @@ A reusable Claude Code setup for building custom-code websites for any brand. Si
 - **Agents:** `.claude/agents/` — planner, ux-designer, architect, coder, reviewer, builder
 - **Brand & goals (per site):** `docs/project-context.md` — blank in the template, filled by the intake interview
 - **Intake questions:** `docs/intake-questions.md`
+- **Stack (per site):** `docs/stack.md` + `scripts/check.sh` — filled by the architect
+- **Language rule packs:** `docs/stack-rules/`
 - **Quality bar:** `docs/review-standards.md`
 - **Decisions:** `docs/decisions.md`
 - **Feature history:** `work/`
+
+---
+
+## Supported stacks
+
+The architect recommends a stack (or uses the one you require) and applies the matching rule pack:
+
+| Family | Examples |
+|---|---|
+| Static | Plain HTML/CSS/JS, Eleventy, Hugo, Jekyll, Zola |
+| JavaScript / TypeScript | Astro, Next.js, Nuxt, SvelteKit, React Router, Vite, Express/Hono |
+| PHP | Plain PHP, Laravel, Symfony |
+| WordPress | Custom block/classic themes, child themes, custom plugins |
+| Python | Django, Wagtail, Flask, FastAPI |
+| Ruby | Rails, Sinatra |
+| Go | net/http, Chi, Echo, Gin, templ |
+| JVM | Spring Boot (Java/Kotlin), Quarkus, Ktor |
+| .NET | ASP.NET Core, Razor Pages, Blazor |
+| Rust | Axum, Actix, Leptos |
+
+Anything else: the architect writes a new rule pack from `docs/stack-rules/_template.md` for you to approve. Every stack runs the same checks through `bash scripts/check.sh`, locally and in CI.
 
 ---
 
@@ -18,6 +41,8 @@ A reusable Claude Code setup for building custom-code websites for any brand. Si
 
 - Claude Code 2.1.277 or newer (`claude --version`) so it reads `AGENTS.md`
 - A GitHub account
+- The runtime for your chosen stack (Node, PHP, Python…) — the architect tells you what to install
+- Windows: use Git Bash or WSL to run `scripts/check.sh`
 
 ---
 

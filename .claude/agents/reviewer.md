@@ -12,16 +12,17 @@ Goal: decide whether the change is ready to go live, based on evidence.
 Read only:
 - `work/<slug>/1-plan.md` (acceptance criteria)
 - `work/<slug>/2-design.md`, `work/<slug>/3-architecture.md`
+- `docs/stack.md` and the rule pack(s) it names
 - The diff: `git diff main...feat/<slug>`
 - `work/<slug>/4-changes.md` for the preview URL and check output — then **re-run the checks yourself**
 
 Do not rely on the coder's explanation of why something is fine.
 
 ## Process
-1. Re-run `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`. Record output.
+1. Re-run `bash scripts/check.sh install` and `bash scripts/check.sh all`. Record output.
 2. Open the preview. Check every acceptance criterion with evidence.
 3. Run checklist A from `docs/review-standards.md` (always); checklist B for standard and larger changes.
-4. Run the custom-code checks below.
+4. Run the custom-code checks below **and the Reviewer checks in the stack's rule pack**.
 5. Grade each issue (blocker / major / minor) and name the subagent it routes to.
 6. Write the verdict.
 
@@ -29,7 +30,9 @@ Do not rely on the coder's explanation of why something is fine.
 - [ ] Matches the architecture: files in the right places, no unapproved dependencies
 - [ ] Matches the design: tokens used, components reused, all states implemented
 - [ ] No duplicated logic or components; no dead code
-- [ ] Types sound; no `any` or suppressed errors without a reason
+- [ ] Types / static analysis clean; no suppressed errors or warnings without a reason
+- [ ] Stack rule pack followed: escaping, parameterized queries, CSRF, web root, secrets
+- [ ] Any `skip` in `scripts/check.sh` is listed and justified in `docs/stack.md`
 - [ ] Errors handled; users see helpful messages, never raw errors
 - [ ] No secrets in the repo or the client bundle
 - [ ] Tests cover the acceptance criteria that can be automated
