@@ -13,7 +13,7 @@ Covers: plain HTML/CSS/JS (no build), and static site generators — Eleventy (J
 Plain HTML (tooling via npm):
 ```bash
 install() { npm ci; }
-lint()    { npx html-validate "**/*.html" && npx stylelint "**/*.css" && npx prettier --check .; }
+lint()    { npx html-validate "public/**/*.html" && npx stylelint "public/**/*.css" && npx prettier --check public; }
 types()   { skip types "plain JS, no TypeScript"; }
 test_()   { npx playwright test; }        # smoke: every page loads, nav works, forms submit
 build()   { skip build "no build step — files are served as-is"; }
@@ -45,7 +45,8 @@ Jekyll: `install() { bundle install; }`, `build() { bundle exec jekyll build; }`
 `.nvmrc` (Eleventy / tooling), `.ruby-version` (Jekyll). Hugo/Zola: pin the version in the CI setup step (e.g. `peaceiris/actions-hugo`) and in `docs/stack.md`.
 
 ## Project structure & web root
-- Plain: repo root or `public/` is the web root — decide and record it. Keep tooling files (`package.json`, configs) out of the served folder where the host allows.
+- Plain: serve from `public/` — **never the repo root**, which would publish `docs/` (client details), `work/` and `AGENTS.md`.
+- Eleventy / Jekyll read the repo root by default: exclude `docs/`, `work/`, `.claude/`, `AGENTS.md` (`.eleventyignore`; Jekyll `exclude:` in `_config.yml`), and add them to `.prettierignore`.
 - Eleventy → `_site/`, Hugo → `public/`, Jekyll → `_site/`, Zola → `public/` (build output, not committed).
 
 ## Coding rules

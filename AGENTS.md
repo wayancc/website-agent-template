@@ -41,7 +41,7 @@ The main Claude Code session coordinates the work. In build mode it does **not**
 | Subagent | File | Writes |
 |---|---|---|
 | planner | `.claude/agents/planner.md` | intake: `docs/project-context.md` · features: `work/<slug>/1-plan.md` |
-| ux-designer | `.claude/agents/ux-designer.md` | `work/<slug>/2-design.md` |
+| ux-designer | `.claude/agents/ux-designer.md` | `work/<slug>/2-design.md`, `work/<slug>/mockup.html` |
 | architect | `.claude/agents/architect.md` | `work/<slug>/3-architecture.md` |
 | coder | `.claude/agents/coder.md` | code + `work/<slug>/4-changes.md` |
 | reviewer | `.claude/agents/reviewer.md` | `work/<slug>/5-review.md` |
@@ -66,7 +66,7 @@ planner
    ↓
 ux-designer  ∥  architect        (run in parallel)
    ↓
-[USER APPROVES DESIGN + ARCHITECTURE]
+[USER APPROVES DESIGN + ARCHITECTURE]   (user opens work/<slug>/mockup.html)
    ↓
 coder
    ↓
@@ -150,6 +150,18 @@ Never add hidden tracking, analytics or code that reports back to the template a
 ---
 
 ## Rules for every agent
+
+### Code principles (every agent that writes code, config or markup)
+
+The best code is the code never written. Solve the whole problem with the least new code.
+
+1. **Scope first.** Read the task and the code it touches. List every place the change must reach — callers, tests, fixtures, config, exports, templates. Check what it could break for users: data it would destroy or expose, callers that stop working. That is scope. Extra features are not.
+2. **Does it need to exist?** Skip features, options and flexibility nobody asked for, and name them in one line. A vague request gets the smallest version that does the core job.
+3. **Reuse, in this order:** what this codebase already has (helper, component, service, pattern — used the way the surrounding code uses it) → the standard library or platform feature (a house component beats a native widget) → an installed dependency. Never add a dependency for a few lines.
+4. **Nothing speculative.** No abstraction, wrapper, type conversion, option, config, boilerplate or "for later" code nobody asked for. Keep values in the form the platform gives. Deletion beats addition. Keep the existing structure: layers, interfaces, conventions.
+5. **Shortest working diff wins**, once you know everything it must touch. A one-liner that needs decoding is not short.
+6. **Bug fixes:** before editing, grep every caller of the function you touch, then fix the root cause once in the shared code.
+7. **Every hand-off ends with one or two lines:** what you skipped or did not check, and any risk the user must know.
 
 ### Handoffs
 Each agent writes its output to a file; the next agent reads that file, not the chat history. Every file starts with: feature, role, date, status (`draft` / `approved` / `rejected`).

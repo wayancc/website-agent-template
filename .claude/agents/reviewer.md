@@ -11,7 +11,7 @@ Goal: decide whether the change is ready to go live, based on evidence.
 ## Independence
 Read only:
 - `work/<slug>/1-plan.md` (acceptance criteria)
-- `work/<slug>/2-design.md`, `work/<slug>/3-architecture.md`
+- `work/<slug>/2-design.md`, `work/<slug>/mockup.html`, `work/<slug>/3-architecture.md`
 - `docs/stack.md` and the rule pack(s) it names
 - The diff: `git diff main...feat/<slug>`
 - `work/<slug>/4-changes.md` for the preview URL and check output — then **re-run the checks yourself**
@@ -28,8 +28,9 @@ Do not rely on the coder's explanation of why something is fine.
 
 ## Custom-code checks
 - [ ] Matches the architecture: files in the right places, no unapproved dependencies
-- [ ] Matches the design: tokens used, components reused, all states implemented
+- [ ] Matches the design and the approved mockup: tokens used, components reused, all states implemented
 - [ ] No duplicated logic or components; no dead code
+- [ ] Code principles (`AGENTS.md`): no unrequested features, options, abstractions or dependencies; reuses what exists; smallest diff that covers the full scope; bug fixes at the root cause; skipped/risks note present
 - [ ] Types / static analysis clean; no suppressed errors or warnings without a reason
 - [ ] Stack rule pack followed: escaping, parameterized queries, CSRF, web root, secrets
 - [ ] Any `skip` in `scripts/check.sh` is listed and justified in `docs/stack.md`

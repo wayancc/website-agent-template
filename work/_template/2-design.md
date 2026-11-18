@@ -9,13 +9,8 @@ Role: ux-designer | Date: YYYY-MM-DD | Status: draft
 ## Page structure
 1. <Section> — purpose
 
-## Wireframes
-### Mobile (375px)
-```
-```
-### Desktop (1440px)
-```
-```
+## Mockup
+`work/<slug>/mockup.html` — open in a browser; check at 375px and 1440px.
 
 ## Components
 ### <ComponentName>

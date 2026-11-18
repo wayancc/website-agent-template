@@ -63,7 +63,7 @@ Every "pass" needs evidence: command output, a screenshot, a URL checked, or a f
 - [ ] No secrets or API keys in front-end code or the repo
 - [ ] Server-side input validated; output escaped; database queries parameterized
 - [ ] CSRF protection on every server-handled form
-- [ ] Only the public web root is reachable; config, `.env` and dependencies are not
+- [ ] Only the public web root is reachable; config, `.env`, dependencies, `docs/` and `work/` are not
 - [ ] Dependency audit (the stack's audit tool) shows no unresolved high/critical issues
 - [ ] Third-party scripts are necessary and from trusted sources
 - [ ] Cookie/consent behavior matches what the user requires

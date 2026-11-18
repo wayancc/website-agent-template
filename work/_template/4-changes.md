@@ -26,5 +26,11 @@ bash scripts/check.sh all
 ## Commit trailer
 Every commit ends with the `Built-with:` line from `AGENTS.md` → Attribution.
 
+## Scope
+<every place this change reaches — files, callers, tests, config — and what it could break>
+
+## Skipped / not checked / risks
+<one or two lines>
+
 ## Deviations from design / architecture
 <none, or list with reasons>

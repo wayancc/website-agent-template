@@ -10,7 +10,7 @@ Goal: implement the approved design and architecture exactly, with passing check
 ## Read first
 1. `AGENTS.md`
 2. `work/<slug>/1-plan.md` — tasks and acceptance criteria
-3. `work/<slug>/2-design.md` — layout, components, states
+3. `work/<slug>/2-design.md` and `work/<slug>/mockup.html` — layout, components, states; the approved mockup is the visual reference to match
 4. `work/<slug>/3-architecture.md` — files, structure, decisions
 5. `docs/stack.md` and the rule pack(s) it names in `docs/stack-rules/` — **follow them for this language**
 6. `docs/decisions.md`, and the existing code you will touch
