@@ -2,6 +2,8 @@
 
 A reusable Claude Code setup for building custom-code websites for any brand. Six agents plan, design, build and review each site; you approve by merging pull requests.
 
+> **Using this template:** click **Use this template → Create a new repository** and choose **Private** for client projects — each site holds the client's business details, goals and unreleased work. **Don't fork:** a fork of a public repo stays public.
+
 - **Agent rules:** `AGENTS.md` (Claude Code reads it automatically)
 - **Agents:** `.claude/agents/` — planner, ux-designer, architect, coder, reviewer, builder
 - **Brand & goals (per site):** `docs/project-context.md` — blank in the template, filled by the intake interview
@@ -14,13 +16,13 @@ A reusable Claude Code setup for building custom-code websites for any brand. Si
 
 ## One-time: set up the template
 
-1. Create a **private** GitHub repo named `website-agent-template` (empty — no README).
+1. Create a GitHub repo named `website-agent-template` (public or private) (empty — no README).
 2. In this folder:
    ```bash
    git init -b main
    git add .
    git commit -m "chore: website agent template"
-   git remote add origin https://github.com/<your-account>/website-agent-template.git
+   git remote add origin https://github.com/wayancc/website-agent-template.git
    git push -u origin main
    ```
 3. On GitHub → **Settings → General → tick "Template repository"**.
@@ -35,7 +37,7 @@ Don't build sites inside the template repo itself — it stays blank.
 1. On GitHub, open `website-agent-template` → **Use this template → Create a new repository** — e.g. `wyn-site`, `brandx-site`. Keep it private.
 2. Clone it:
    ```bash
-   git clone https://github.com/<your-account>/<brand>-site.git
+   git clone https://github.com/wayancc/<brand>-site.git
    cd <brand>-site
    ```
 3. On the new repo → Settings → Branches → add a rule for `main`: require a pull request and require the **CI** check to pass.
@@ -55,3 +57,7 @@ Don't build sites inside the template repo itself — it stays blank.
 ## Improving the template
 
 Improve agents, rules or checks **in the template repo**, so every future site gets them. To bring an improvement into an existing site, copy the changed files across (or cherry-pick the commit). Never put brand-specific content in the template — that goes in each site's `docs/project-context.md`.
+
+## License
+
+MIT — see `LICENSE`. Free to use, copy and adapt, including for client work.
