@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Build output (common frameworks)
+dist/
+build/
+out/
+.next/
+.astro/
+.nuxt/
+.output/
+.svelte-kit/
+.vercel/
+.netlify/
+
+# Env — never commit secrets (.env.example is allowed)
+.env
+.env.*
+!.env.example
+
+# Tests / reports
+coverage/
+playwright-report/
+test-results/
+.lighthouseci/
+
+# Claude Code personal settings
+.claude/settings.local.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Logs
+*.log
+npm-debug.log*
